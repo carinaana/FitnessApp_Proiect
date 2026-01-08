@@ -1,10 +1,15 @@
 using FitnessWeb.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<FitnessContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FitnessContext") ?? throw new InvalidOperationException("Connection string 'FitnessContext' not found.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<FitnessContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

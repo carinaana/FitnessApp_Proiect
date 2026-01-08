@@ -9,7 +9,9 @@ namespace FitnessWeb.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
+        [Display(Name = "Start Time")]
         public string StartTime { get; set; } 
+        public int DurationMinutes { get; set; } 
         public int MaxCapacity { get; set; }
 
         public int TrainerID { get; set; }
