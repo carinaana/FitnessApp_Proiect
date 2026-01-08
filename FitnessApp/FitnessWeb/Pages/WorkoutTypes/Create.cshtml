@@ -1,39 +1,50 @@
 ﻿@page
 @model FitnessWeb.Pages.WorkoutTypes.CreateModel
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Workout Type";
 }
 
-<h1>Create</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-bottom">
+                    <h4 class="mb-0 text-primary">Add New Workout Type</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<h4>WorkoutType</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="WorkoutType.Name" class="control-label"></label>
-                <input asp-for="WorkoutType.Name" class="form-control" />
-                <span asp-validation-for="WorkoutType.Name" class="text-danger"></span>
+                        <div class="form-group mb-3">
+                            <label asp-for="WorkoutType.Name" class="control-label fw-bold">Name</label>
+                            <input asp-for="WorkoutType.Name" class="form-control" placeholder="e.g. Pilates, Zumba" />
+                            <span asp-validation-for="WorkoutType.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="WorkoutType.Difficulty" class="control-label fw-bold">Difficulty Level</label>
+                            <select asp-for="WorkoutType.Difficulty" class="form-select">
+                                <option value="" disabled selected>-- Select Difficulty --</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                            <span asp-validation-for="WorkoutType.Difficulty" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="Index" class="btn btn-outline-secondary">Back to List</a>
+                            <input type="submit" value="Create" class="btn btn-primary px-4" />
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="WorkoutType.Difficulty" class="control-label"></label>
-                <input asp-for="WorkoutType.Difficulty" class="form-control" />
-                <span asp-validation-for="WorkoutType.Difficulty" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

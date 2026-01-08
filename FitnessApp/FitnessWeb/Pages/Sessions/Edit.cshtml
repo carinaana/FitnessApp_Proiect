@@ -1,60 +1,62 @@
 ﻿@page
 @model FitnessWeb.Pages.Sessions.EditModel
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Session";
 }
 
-<h1>Edit</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-bottom">
+                    <h4 class="mb-0 text-warning">Edit Session</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Session.ID" />
 
-<h4>Session</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Session.ID" />
-            <div class="form-group">
-                <label asp-for="Session.Date" class="control-label"></label>
-                <input asp-for="Session.Date" class="form-control" />
-                <span asp-validation-for="Session.Date" class="text-danger"></span>
+                        <div class="form-group mb-3">
+                            <label asp-for="Session.Date" class="control-label fw-bold">Date</label>
+                            <input asp-for="Session.Date" type="date" class="form-control" />
+                            <span asp-validation-for="Session.Date" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Session.StartTime" class="control-label fw-bold">Start Time</label>
+                            <input asp-for="Session.StartTime" type="time" class="form-control" />
+                            <span asp-validation-for="Session.StartTime" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Session.WorkoutTypeID" class="control-label fw-bold">Workout Type</label>
+                            <select asp-for="Session.WorkoutTypeID" class="form-select" asp-items="ViewBag.WorkoutTypeID"></select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Session.TrainerID" class="control-label fw-bold">Trainer</label>
+                            <select asp-for="Session.TrainerID" class="form-select" asp-items="ViewBag.TrainerID"></select>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="Session.MaxCapacity" class="control-label fw-bold">Max Capacity</label>
+                            <input asp-for="Session.MaxCapacity" class="form-control" />
+                            <span asp-validation-for="Session.MaxCapacity" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="./Index" class="btn btn-outline-secondary">Back</a>
+                            <input type="submit" value="Save Changes" class="btn btn-warning px-4 text-white" />
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Session.StartTime" class="control-label"></label>
-                <input asp-for="Session.StartTime" class="form-control" />
-                <span asp-validation-for="Session.StartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Session.DurationMinutes" class="control-label"></label>
-                <input asp-for="Session.DurationMinutes" class="form-control" />
-                <span asp-validation-for="Session.DurationMinutes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Session.MaxCapacity" class="control-label"></label>
-                <input asp-for="Session.MaxCapacity" class="form-control" />
-                <span asp-validation-for="Session.MaxCapacity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Session.TrainerID" class="control-label"></label>
-                <select asp-for="Session.TrainerID" class="form-control" asp-items="ViewBag.TrainerID" ></select>
-                <span asp-validation-for="Session.TrainerID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Session.WorkoutTypeID" class="control-label"></label>
-                <select asp-for="Session.WorkoutTypeID" class="form-control" asp-items="ViewBag.WorkoutTypeID" ></select>
-                <span asp-validation-for="Session.WorkoutTypeID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FitnessWeb.Data;
+using FitnessWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using FitnessWeb.Data;
-using FitnessWeb.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FitnessWeb.Pages.Trainers
 {
-    public class EditModel : PageModel
+    [Authorize(Roles = "Admin")]
+    public class EditModel : TrainerSpecializationsPageModel 
     {
-        private readonly FitnessWeb.Data.FitnessContext _context;
+        private readonly FitnessContext _context;
 
-        public EditModel(FitnessWeb.Data.FitnessContext context)
+        public EditModel(FitnessContext context)
         {
             _context = context;
         }
@@ -25,53 +27,42 @@ namespace FitnessWeb.Pages.Trainers
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var trainer =  await _context.Trainer.FirstOrDefaultAsync(m => m.ID == id);
-            if (trainer == null)
-            {
-                return NotFound();
-            }
-            Trainer = trainer;
+
+            Trainer = await _context.Trainer
+                .Include(t => t.TrainerSpecializations).ThenInclude(ts => ts.WorkoutType)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            if (Trainer == null) return NotFound();
+
+            PopulateAssignedSpecializationData(_context, Trainer);
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedSpecializations)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            if (id == null) return NotFound();
 
-            _context.Attach(Trainer).State = EntityState.Modified;
+            var trainerToUpdate = await _context.Trainer
+                .Include(t => t.TrainerSpecializations).ThenInclude(ts => ts.WorkoutType)
+                .FirstOrDefaultAsync(m => m.ID == id);
 
-            try
+            if (trainerToUpdate == null) return NotFound();
+
+            if (await TryUpdateModelAsync<Trainer>(
+                trainerToUpdate,
+                "Trainer",
+                t => t.FullName, t => t.Email, t => t.Description))
             {
+                UpdateTrainerSpecializations(_context, selectedSpecializations, trainerToUpdate);
+
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TrainerExists(Trainer.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
-        }
-
-        private bool TrainerExists(int id)
-        {
-            return _context.Trainer.Any(e => e.ID == id);
+            PopulateAssignedSpecializationData(_context, trainerToUpdate);
+            return Page();
         }
     }
 }

@@ -1,66 +1,62 @@
 ﻿@page
 @model FitnessWeb.Pages.Sessions.IndexModel
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sessions Schedule";
 }
 
-<h1>Index</h1>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold">Class Schedule</h2>
+        <a asp-page="Create" class="btn btn-success shadow-sm">
+            <span class="fw-bold">+</span> Schedule New Class
+        </a>
+    </div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].StartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].DurationMinutes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].MaxCapacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].Trainer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Session[0].WorkoutType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Session) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DurationMinutes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxCapacity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Trainer.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorkoutType.ID)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-secondary">
+                        <tr>
+                            <th class="py-3 ps-4">Date</th>
+                            <th class="py-3">Time</th>
+                            <th class="py-3">Workout</th>
+                            <th class="py-3">Trainer</th>
+                            <th class="py-3 text-center">Capacity</th>
+                            <th class="py-3 text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Session)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold">
+                                    @item.Date.ToShortDateString()
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">🕒 @item.StartTime</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary">@item.WorkoutType.Name</span>
+                                </td>
+                                <td>
+                                    @item.Trainer.FullName
+                                </td>
+                                <td class="text-center">
+                                    @item.MaxCapacity slots
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group" role="group">
+                                        <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-sm btn-outline-warning">Edit</a>
+                                        <a asp-page="./Details" asp-route-id="@item.ID" class="btn btn-sm btn-outline-primary">Details</a>
+                                        <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

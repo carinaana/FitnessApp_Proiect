@@ -26,7 +26,9 @@ namespace FitnessWeb.Pages.Sessions
         {
             Session = await _context.Session
                 .Include(s => s.Trainer)
-                .Include(s => s.WorkoutType).ToListAsync();
+                .Include(s => s.WorkoutType)
+                .OrderBy(s => s.Date).ThenBy(s => s.StartTime) 
+                .ToListAsync();
         }
     }
 }

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace FitnessWeb.Pages.Trainers
 {
     [Authorize(Roles = "Admin")]
-    public class CreateModel : PageModel
+    public class CreateModel : TrainerSpecializationsPageModel
     {
         private readonly FitnessWeb.Data.FitnessContext _context;
         private readonly UserManager<IdentityUser> _userManager;
@@ -31,10 +31,13 @@ namespace FitnessWeb.Pages.Trainers
 
         public IActionResult OnGet()
         {
+            var trainer = new Trainer();
+            trainer.TrainerSpecializations = new List<TrainerSpecialization>();
+
+            PopulateAssignedSpecializationData(_context, trainer);
             return Page();
         }
-
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string[] selectedSpecializations)
         {
             if (!ModelState.IsValid)
             {
@@ -48,11 +51,23 @@ namespace FitnessWeb.Pages.Trainers
             {
                 await _userManager.AddToRoleAsync(user, "Trainer");
 
+                if (selectedSpecializations != null)
+                {
+                    Trainer.TrainerSpecializations = new List<TrainerSpecialization>();
+                    foreach (var cat in selectedSpecializations)
+                    {
+                        var specToAdd = new TrainerSpecialization { WorkoutTypeID = int.Parse(cat) };
+                        Trainer.TrainerSpecializations.Add(specToAdd);
+                    }
+                }
+
                 _context.Trainer.Add(Trainer);
                 await _context.SaveChangesAsync();
 
                 return RedirectToPage("./Index");
             }
+
+            PopulateAssignedSpecializationData(_context, Trainer); 
 
             foreach (var error in result.Errors)
             {

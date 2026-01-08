@@ -16,5 +16,6 @@ namespace FitnessWeb.Data
         public DbSet<WorkoutType> WorkoutType { get; set; }
         public DbSet<Session> Session { get; set; }
         public DbSet<Booking> Booking { get; set; }
+        public DbSet<TrainerSpecialization> TrainerSpecialization { get; set; }
     }
 }

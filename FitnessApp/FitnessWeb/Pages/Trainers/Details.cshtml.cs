@@ -12,9 +12,9 @@ namespace FitnessWeb.Pages.Trainers
 {
     public class DetailsModel : PageModel
     {
-        private readonly FitnessWeb.Data.FitnessContext _context;
+        private readonly FitnessContext _context;
 
-        public DetailsModel(FitnessWeb.Data.FitnessContext context)
+        public DetailsModel(FitnessContext context)
         {
             _context = context;
         }
@@ -23,20 +23,15 @@ namespace FitnessWeb.Pages.Trainers
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var trainer = await _context.Trainer.FirstOrDefaultAsync(m => m.ID == id);
-            if (trainer == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Trainer = trainer;
-            }
+            Trainer = await _context.Trainer
+                .Include(t => t.TrainerSpecializations)
+                .ThenInclude(ts => ts.WorkoutType)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            if (Trainer == null) return NotFound();
+
             return Page();
         }
     }

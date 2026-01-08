@@ -36,8 +36,8 @@ namespace FitnessWeb.Pages.Sessions
                 return NotFound();
             }
             Session = session;
-           ViewData["TrainerID"] = new SelectList(_context.Trainer, "ID", "ID");
-           ViewData["WorkoutTypeID"] = new SelectList(_context.WorkoutType, "ID", "ID");
+           ViewData["TrainerID"] = new SelectList(_context.Trainer, "ID", "FullName");
+           ViewData["WorkoutTypeID"] = new SelectList(_context.WorkoutType, "ID", "Name");
             return Page();
         }
 

@@ -21,8 +21,8 @@ namespace FitnessWeb.Pages.Sessions
 
         public IActionResult OnGet()
         {
-        ViewData["TrainerID"] = new SelectList(_context.Trainer, "ID", "ID");
-        ViewData["WorkoutTypeID"] = new SelectList(_context.WorkoutType, "ID", "ID");
+        ViewData["TrainerID"] = new SelectList(_context.Trainer, "ID", "FullName");
+        ViewData["WorkoutTypeID"] = new SelectList(_context.WorkoutType, "ID", "Name");
             return Page();
         }
 

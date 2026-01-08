@@ -28,7 +28,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Sessions/Index">Sessions</a>
                         </li>
+
+                    
+
                     </ul>
+                    @if (User.IsInRole("Trainer"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Trainers/MyProfile">
+                                👤 My Profile
+                            </a>
+                        </li>
+                    }
                     <partial name="_LoginPartial" />
                 </div>
             </div>

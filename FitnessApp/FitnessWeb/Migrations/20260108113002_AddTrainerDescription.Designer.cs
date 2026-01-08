@@ -4,6 +4,7 @@ using FitnessWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessWeb.Migrations
 {
     [DbContext(typeof(FitnessContext))]
-    partial class FitnessContextModelSnapshot : ModelSnapshot
+    [Migration("20260108113002_AddTrainerDescription")]
+    partial class AddTrainerDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,32 +132,13 @@ namespace FitnessWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Specialization")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
                     b.ToTable("Trainer");
-                });
-
-            modelBuilder.Entity("FitnessWeb.Models.TrainerSpecialization", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("TrainerID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WorkoutTypeID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("TrainerID");
-
-                    b.HasIndex("WorkoutTypeID");
-
-                    b.ToTable("TrainerSpecialization");
                 });
 
             modelBuilder.Entity("FitnessWeb.Models.WorkoutType", b =>
@@ -418,25 +402,6 @@ namespace FitnessWeb.Migrations
                     b.Navigation("WorkoutType");
                 });
 
-            modelBuilder.Entity("FitnessWeb.Models.TrainerSpecialization", b =>
-                {
-                    b.HasOne("FitnessWeb.Models.Trainer", "Trainer")
-                        .WithMany("TrainerSpecializations")
-                        .HasForeignKey("TrainerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FitnessWeb.Models.WorkoutType", "WorkoutType")
-                        .WithMany("TrainerSpecializations")
-                        .HasForeignKey("WorkoutTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Trainer");
-
-                    b.Navigation("WorkoutType");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -501,15 +466,11 @@ namespace FitnessWeb.Migrations
             modelBuilder.Entity("FitnessWeb.Models.Trainer", b =>
                 {
                     b.Navigation("Sessions");
-
-                    b.Navigation("TrainerSpecializations");
                 });
 
             modelBuilder.Entity("FitnessWeb.Models.WorkoutType", b =>
                 {
                     b.Navigation("Sessions");
-
-                    b.Navigation("TrainerSpecializations");
                 });
 #pragma warning restore 612, 618
         }

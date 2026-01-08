@@ -1,42 +1,61 @@
 ﻿@page
 @model FitnessWeb.Pages.WorkoutTypes.IndexModel
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Workout Types";
 }
 
-<h1>Index</h1>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold">Workout Types</h2>
+        <a asp-page="Create" class="btn btn-success shadow-sm">
+            <span class="fw-bold">+</span> Add New Type
+        </a>
+    </div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkoutType[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkoutType[0].Difficulty)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.WorkoutType) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Difficulty)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-secondary">
+                        <tr>
+                            <th class="py-3 ps-4">Workout Name</th>
+                            <th class="py-3">Difficulty</th>
+                            <th class="py-3 text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.WorkoutType)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @if (item.Difficulty == "Hard")
+                                    {
+                                        <span class="badge bg-danger">Hard</span>
+                                    }
+                                    else if (item.Difficulty == "Medium")
+                                    {
+                                        <span class="badge bg-warning text-dark">Medium</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">Easy</span>
+                                    }
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group" role="group">
+                                        <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-sm btn-outline-warning">Edit</a>
+                                        <a asp-page="./Details" asp-route-id="@item.ID" class="btn btn-sm btn-outline-primary">Details</a>
+                                        <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

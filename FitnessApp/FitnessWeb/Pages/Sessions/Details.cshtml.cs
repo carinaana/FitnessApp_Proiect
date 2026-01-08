@@ -28,7 +28,10 @@ namespace FitnessWeb.Pages.Sessions
                 return NotFound();
             }
 
-            var session = await _context.Session.FirstOrDefaultAsync(m => m.ID == id);
+            var session = await _context.Session
+                .Include(s => s.Trainer)     
+                .Include(s => s.WorkoutType)
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (session == null)
             {
                 return NotFound();

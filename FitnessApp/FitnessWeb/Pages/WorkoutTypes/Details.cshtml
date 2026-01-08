@@ -1,31 +1,37 @@
 ﻿@page
 @model FitnessWeb.Pages.WorkoutTypes.DetailsModel
-
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-bottom">
+                    <h4 class="mb-0 text-primary">Workout Details</h4>
+                </div>
+                <div class="card-body">
 
-<div>
-    <h4>WorkoutType</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkoutType.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.WorkoutType.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkoutType.Difficulty)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.WorkoutType.Difficulty)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.WorkoutType.ID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+                    <div class="form-group mb-3">
+                        <label class="control-label fw-bold">Workout Name</label>
+                        <input value="@Model.WorkoutType.Name" class="form-control bg-light" readonly />
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="control-label fw-bold">Difficulty</label>
+                        <input value="@Model.WorkoutType.Difficulty" class="form-control bg-light" readonly />
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-page="./Index" class="btn btn-outline-secondary">Back to List</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-page="./Edit" asp-route-id="@Model.WorkoutType.ID" class="btn btn-primary px-4">Edit</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

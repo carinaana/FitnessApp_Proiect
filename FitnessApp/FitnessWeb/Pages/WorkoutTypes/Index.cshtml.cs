@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace FitnessWeb.Pages.WorkoutTypes
 {
-    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
         private readonly FitnessWeb.Data.FitnessContext _context;
