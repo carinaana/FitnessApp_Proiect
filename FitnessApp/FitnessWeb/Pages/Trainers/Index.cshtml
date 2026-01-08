@@ -76,6 +76,12 @@
                         }
                     </tbody>
                 </table>
+                @if (!Model.Trainer.Any())
+                {
+                    <div class="text-center py-5 text-muted">
+                        <p class="mb-0">No trainers found for this filter.</p>
+                    </div>
+                }
             </div>
         </div>
     </div>
