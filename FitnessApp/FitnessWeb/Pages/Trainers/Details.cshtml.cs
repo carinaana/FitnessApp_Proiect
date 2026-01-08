@@ -28,6 +28,7 @@ namespace FitnessWeb.Pages.Trainers
             Trainer = await _context.Trainer
                 .Include(t => t.TrainerSpecializations)
                 .ThenInclude(ts => ts.WorkoutType)
+                .Include(t => t.Reviews.OrderByDescending(r => r.Date))
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Trainer == null) return NotFound();

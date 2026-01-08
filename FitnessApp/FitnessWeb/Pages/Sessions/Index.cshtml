@@ -12,6 +12,27 @@
         </a>
     </div>
 
+    <div class="card shadow-sm border-0 mb-4 bg-light">
+        <div class="card-body py-3">
+            <form method="get" class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <label class="fw-bold text-secondary">Filter by Workout:</label>
+                </div>
+                <div class="col-auto">
+                    <select asp-for="SelectedWorkoutTypeID" asp-items="Model.WorkoutTypesList" class="form-select border-primary" onchange="this.form.submit()">
+                        <option value="">-- All Workouts --</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    @if (Model.SelectedWorkoutTypeID.HasValue)
+                    {
+                        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm">Reset Filter </a>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="card shadow-sm border-0">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -56,6 +77,13 @@
                         }
                     </tbody>
                 </table>
+
+                @if (!Model.Session.Any())
+                {
+                    <div class="text-center py-5 text-muted">
+                        <p class="mb-0">No sessions found for this filter.</p>
+                    </div>
+                }
             </div>
         </div>
     </div>
