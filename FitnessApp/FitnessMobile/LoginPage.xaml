@@ -1,0 +1,19 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessMobile.LoginPage"
+             Title="Login Fitness App" BackgroundColor="#f0f2f5">
+    <VerticalStackLayout Spacing="15" Padding="30" VerticalOptions="Center">
+
+        <Image Source="dotnet_bot.png" HeightRequest="150" />
+
+        <Label Text="Welcome Back!" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" />
+
+        <Entry x:Name="EmailEntry" Placeholder="Email Address" Keyboard="Email" />
+        <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
+
+        <Button Text="LOGIN" BackgroundColor="#0d6efd" Clicked="OnLoginClicked" HeightRequest="50" />
+
+        <Button Text="No account? Register" BackgroundColor="Transparent" TextColor="#0d6efd" Clicked="OnRegisterClicked" />
+
+    </VerticalStackLayout>
+</ContentPage>
