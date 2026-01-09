@@ -14,19 +14,15 @@
                    HorizontalOptions="Center" 
                    Margin="0,0,0,20"/>
 
-            <!-- Nume -->
             <Entry x:Name="FirstNameEntry" Placeholder="First Name" />
             <Entry x:Name="LastNameEntry" Placeholder="Last Name" />
 
-            <!-- Contact -->
             <Entry x:Name="PhoneEntry" Placeholder="Phone Number" Keyboard="Telephone" />
             <Entry x:Name="EmailEntry" Placeholder="Email Address" Keyboard="Email" />
 
-            <!-- Parola -->
             <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
             <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" IsPassword="True" />
 
-            <!-- Butoane -->
             <Button Text="REGISTER" 
                     BackgroundColor="#198754" 
                     HeightRequest="50" 

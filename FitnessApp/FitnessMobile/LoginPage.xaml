@@ -4,7 +4,7 @@
              Title="Login Fitness App" BackgroundColor="#f0f2f5">
     <VerticalStackLayout Spacing="15" Padding="30" VerticalOptions="Center">
 
-        <Image Source="dotnet_bot.png" HeightRequest="150" />
+        <Image Source="pozagym.gif" HeightRequest="150" HorizontalOptions="Center"/>
 
         <Label Text="Welcome Back!" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" />
 

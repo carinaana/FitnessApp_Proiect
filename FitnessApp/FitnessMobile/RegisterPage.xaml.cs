@@ -11,7 +11,6 @@ public partial class RegisterPage : ContentPage
 
     private async void OnRegisterButtonClicked(object sender, EventArgs e)
     {
-        // 1. Validari simple
         if (string.IsNullOrWhiteSpace(FirstNameEntry.Text) ||
             string.IsNullOrWhiteSpace(LastNameEntry.Text) ||
             string.IsNullOrWhiteSpace(EmailEntry.Text) ||
@@ -27,7 +26,6 @@ public partial class RegisterPage : ContentPage
             return;
         }
 
-        // 2. Crearea obiectului DTO
         var registerDto = new RegisterDto
         {
             FirstName = FirstNameEntry.Text,
@@ -37,13 +35,11 @@ public partial class RegisterPage : ContentPage
             Password = PasswordEntry.Text
         };
 
-        // 3. Apelarea API-ului
         bool isSuccess = await App.Service.Register(registerDto);
 
         if (isSuccess)
         {
             await DisplayAlert("Success", "Account created! You can now login.", "OK");
-            // Ne intoarcem la pagina de Login
             await Navigation.PopAsync();
         }
         else
@@ -54,7 +50,6 @@ public partial class RegisterPage : ContentPage
 
     private async void OnCancelClicked(object sender, EventArgs e)
     {
-        // Ne intoarcem la Login fara sa facem nimic
         await Navigation.PopAsync();
     }
 }

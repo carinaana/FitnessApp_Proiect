@@ -8,7 +8,6 @@ public partial class SessionsPage : ContentPage
     WorkoutType _workout;
     bool _isGlobal = false;
 
-    // CONSTRUCTOR 1: Folosit cand dai click pe tab-ul "Schedule" (Arata TOT)
     public SessionsPage()
     {
         InitializeComponent();
@@ -16,7 +15,6 @@ public partial class SessionsPage : ContentPage
         Title = "Full Schedule";
     }
 
-    // CONSTRUCTOR 2: Folosit cand dai click pe un Sport (Arata FILTRAT)
     public SessionsPage(WorkoutType workout)
     {
         InitializeComponent();
@@ -34,9 +32,7 @@ public partial class SessionsPage : ContentPage
     {
         if (_isGlobal)
         {
-            // LOGICA PENTRU "SHOW ALL"
-            // Deoarece API-ul curent cere ID, vom face un truc:
-            // Luam toate tipurile de sport si extragem sesiunile pentru fiecare.
+
             var allWorkouts = await App.Service.GetWorkoutTypes();
             var allSessions = new List<SessionDto>();
 
@@ -46,12 +42,10 @@ public partial class SessionsPage : ContentPage
                 allSessions.AddRange(s);
             }
 
-            // Le sortam dupa data
             SessionsList.ItemsSource = allSessions.OrderBy(x => x.Date).ThenBy(x => x.StartTime).ToList();
         }
         else
         {
-            // LOGICA PENTRU "FILTRAT"
             SessionsList.ItemsSource = await App.Service.GetSessions(_workout.ID);
         }
     }
@@ -72,7 +66,7 @@ public partial class SessionsPage : ContentPage
         {
             await DisplayAlert("Success", "Booking Confirmed!", "OK");
             ScheduleNotification(session);
-            await LoadSessions(); // Refresh
+            await LoadSessions(); 
         }
         else
         {
@@ -84,7 +78,6 @@ public partial class SessionsPage : ContentPage
     {
         if (await LocalNotificationCenter.Current.AreNotificationsEnabled() == false)
         {
-            // Asta va deschide Pop-up-ul de sistem pe Android 13+
             bool granted = await LocalNotificationCenter.Current.RequestNotificationPermission();
 
             if (!granted)

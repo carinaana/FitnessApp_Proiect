@@ -11,7 +11,6 @@ public partial class TrainerDetailsPage : ContentPage
         InitializeComponent();
         _trainer = trainer;
 
-        // Populam datele
         NameLabel.Text = trainer.FullName;
         SpecLabel.Text = trainer.Specialization;
         DescLabel.Text = trainer.Description;
@@ -22,7 +21,7 @@ public partial class TrainerDetailsPage : ContentPage
     {
         var review = new ReviewDto
         {
-            MemberName = App.CurrentUserEmail, // Numele celui logat
+            MemberName = App.CurrentUserEmail,
             Comment = CommentEntry.Text,
             Rating = (int)Math.Round(RatingSlider.Value),
             Date = DateTime.Now
@@ -32,7 +31,7 @@ public partial class TrainerDetailsPage : ContentPage
         if (success)
         {
             await DisplayAlert("Success", "Review added!", "OK");
-            await Navigation.PopAsync(); // Ne intoarcem
+            await Navigation.PopAsync(); 
         }
         else
         {

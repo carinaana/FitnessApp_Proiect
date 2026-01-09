@@ -6,10 +6,9 @@
 
     <VerticalStackLayout Spacing="20" Padding="20" VerticalOptions="Center">
 
-        <!-- Card cu informatii utilizator -->
         <Frame Style="{StaticResource BootstrapCard}" HorizontalOptions="Center">
             <VerticalStackLayout Spacing="10" WidthRequest="300">
-                <Image Source="dotnet_bot.png" HeightRequest="100" />
+                <Image Source="pozagym.gif" HeightRequest="100" HorizontalOptions="Center" />
 
                 <Label Text="Welcome," 
                        HorizontalOptions="Center" 
@@ -24,7 +23,6 @@
             </VerticalStackLayout>
         </Frame>
 
-        <!-- Butonul de Logout -->
         <Button Text="LOG OUT" 
                 BackgroundColor="#dc3545" 
                 TextColor="White"

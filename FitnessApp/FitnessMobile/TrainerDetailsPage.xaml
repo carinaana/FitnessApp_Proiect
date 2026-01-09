@@ -4,14 +4,12 @@
              Title="Trainer Details">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
-            <!-- INFO -->
             <Label x:Name="NameLabel" FontSize="24" FontAttributes="Bold" />
             <Label x:Name="SpecLabel" TextColor="Gray" FontSize="18" />
             <Label x:Name="DescLabel" TextColor="Black" />
 
             <BoxView HeightRequest="1" Color="Gray" />
 
-            <!-- ADAUGA REVIEW -->
             <Label Text="Leave a Review" FontAttributes="Bold" />
             <Entry x:Name="CommentEntry" Placeholder="Your opinion..." />
             <Label Text="Rating (1-5):" />
@@ -20,7 +18,6 @@
 
             <BoxView HeightRequest="1" Color="Gray" />
 
-            <!-- LISTA REVIEW-URI -->
             <Label Text="Reviews:" FontAttributes="Bold" FontSize="18"/>
             <CollectionView x:Name="ReviewsList" HeightRequest="300">
                 <CollectionView.ItemTemplate>

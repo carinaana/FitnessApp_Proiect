@@ -15,8 +15,7 @@ public partial class LoginPage : ContentPage
 
         if (result == "OK")
         {
-            App.CurrentUserEmail = EmailEntry.Text; // Tinem minte cine e
-            // Schimbam pagina principala cu TabBar-ul aplicatiei
+            App.CurrentUserEmail = EmailEntry.Text; 
             Application.Current.MainPage = new AppShell();
         }
         else

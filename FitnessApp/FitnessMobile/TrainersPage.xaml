@@ -5,21 +5,18 @@
              BackgroundColor="#f8f9fa">
 
     <Grid RowDefinitions="Auto, *">
-        <!-- ZONA FILTRARE -->
         <Picker x:Name="SpecializationPicker" 
-                Title="Filter by Specialization" 
-                SelectedIndexChanged="OnFilterChanged" 
-                Margin="10" 
-                BackgroundColor="White"/>
+        Title="Filter by Specialization" 
+        SelectedIndexChanged="OnFilterChanged" 
+        Margin="10" 
+        BackgroundColor="White"
+        TextColor="Black" />
 
-        <!-- LISTA ANTRENORI -->
         <CollectionView x:Name="TrainersList" 
                         Grid.Row="1" 
                         SelectionMode="None">
-            <!-- IMPORTANT: FARA SELECTIE -->
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <!-- CARD CU CLICK -->
                     <Frame Style="{StaticResource BootstrapCard}">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnTrainerTapped" 
