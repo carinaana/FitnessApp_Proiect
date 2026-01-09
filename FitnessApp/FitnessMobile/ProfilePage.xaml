@@ -1,0 +1,37 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessMobile.ProfilePage"
+             Title="My Profile"
+             BackgroundColor="#f8f9fa">
+
+    <VerticalStackLayout Spacing="20" Padding="20" VerticalOptions="Center">
+
+        <!-- Card cu informatii utilizator -->
+        <Frame Style="{StaticResource BootstrapCard}" HorizontalOptions="Center">
+            <VerticalStackLayout Spacing="10" WidthRequest="300">
+                <Image Source="dotnet_bot.png" HeightRequest="100" />
+
+                <Label Text="Welcome," 
+                       HorizontalOptions="Center" 
+                       TextColor="Gray"/>
+
+                <Label x:Name="UserEmailLabel" 
+                       Text="user@email.com" 
+                       HorizontalOptions="Center" 
+                       FontAttributes="Bold" 
+                       FontSize="18" 
+                       TextColor="#0d6efd"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Butonul de Logout -->
+        <Button Text="LOG OUT" 
+                BackgroundColor="#dc3545" 
+                TextColor="White"
+                HeightRequest="50"
+                WidthRequest="300"
+                CornerRadius="8"
+                Clicked="OnLogoutClicked" />
+
+    </VerticalStackLayout>
+</ContentPage>

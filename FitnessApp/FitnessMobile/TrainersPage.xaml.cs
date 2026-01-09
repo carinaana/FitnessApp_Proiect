@@ -28,15 +28,18 @@ public partial class TrainersPage : ContentPage
         await LoadData(selected);
     }
 
-    private async void OnTrainerSelected(object sender, SelectionChangedEventArgs e)
+    // EVENIMENTUL NOU DE CLICK (TAP)
+    private async void OnTrainerTapped(object sender, TappedEventArgs e)
     {
-        var trainer = e.CurrentSelection.FirstOrDefault() as TrainerDto;
+        var trainer = e.Parameter as TrainerDto;
         if (trainer == null) return;
 
-        // Navigam la detalii
-        await Navigation.PushAsync(new TrainerDetailsPage(trainer));
+        // Efect vizual rapid (blink)
+        var frame = sender as VisualElement;
+        await frame.FadeTo(0.5, 100);
+        await frame.FadeTo(1.0, 100);
 
-        // Resetam selectia
-        TrainersList.SelectedItem = null;
+        // Navigare
+        await Navigation.PushAsync(new TrainerDetailsPage(trainer));
     }
 }

@@ -50,11 +50,21 @@ namespace FitnessWeb.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+
             if (result.Succeeded)
             {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (!await _userManager.IsInRoleAsync(user, "Member"))
+                {
+                    await _signInManager.SignOutAsync();
+                    return Unauthorized("Acces permis doar clienților! Adminii și Antrenorii trebuie să folosească site-ul Web.");
+                }
+
                 return Ok(new { message = "Login successful" });
             }
-            return Unauthorized("Invalid login attempt");
+
+            return Unauthorized("Email sau parolă greșită.");
         }
     }
 }

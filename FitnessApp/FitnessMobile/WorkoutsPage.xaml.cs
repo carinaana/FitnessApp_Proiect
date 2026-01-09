@@ -21,13 +21,18 @@ public partial class WorkoutsPage : ContentPage
         WorkoutsList.ItemsSource = await App.Service.GetWorkoutTypes(selected == "All" ? null : selected);
     }
 
-    private async void OnWorkoutSelected(object sender, SelectionChangedEventArgs e)
+    // EVENIMENTUL NOU DE CLICK (TAP)
+    private async void OnWorkoutTapped(object sender, TappedEventArgs e)
     {
-        var workout = e.CurrentSelection.FirstOrDefault() as WorkoutType;
+        var workout = e.Parameter as WorkoutType;
         if (workout == null) return;
 
-        // Mergem la Sesiuni (Orar)
+        // Efect vizual
+        var frame = sender as VisualElement;
+        await frame.FadeTo(0.5, 100);
+        await frame.FadeTo(1.0, 100);
+
+        // Navigare catre sesiunile specifice acestui sport
         await Navigation.PushAsync(new SessionsPage(workout));
-        WorkoutsList.SelectedItem = null;
     }
 }

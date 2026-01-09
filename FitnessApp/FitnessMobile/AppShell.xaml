@@ -12,6 +12,12 @@
         <Tab Title="Workouts" Icon="dotnet_bot.png">
             <ShellContent ContentTemplate="{DataTemplate local:WorkoutsPage}" />
         </Tab>
+        <Tab Title="Schedule" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate local:SessionsPage}" />
+        </Tab>
+        <Tab Title="Profile" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ProfilePage}" />
+        </Tab>
     </TabBar>
 
 </Shell>

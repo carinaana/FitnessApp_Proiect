@@ -1,23 +1,59 @@
 using FitnessMobile.Models;
-using Plugin.LocalNotification; // <--- PT NOTIFICARE
+using Plugin.LocalNotification;
 
 namespace FitnessMobile;
 
 public partial class SessionsPage : ContentPage
 {
     WorkoutType _workout;
+    bool _isGlobal = false;
 
+    // CONSTRUCTOR 1: Folosit cand dai click pe tab-ul "Schedule" (Arata TOT)
+    public SessionsPage()
+    {
+        InitializeComponent();
+        _isGlobal = true;
+        Title = "Full Schedule";
+    }
+
+    // CONSTRUCTOR 2: Folosit cand dai click pe un Sport (Arata FILTRAT)
     public SessionsPage(WorkoutType workout)
     {
         InitializeComponent();
         _workout = workout;
         Title = $"{workout.Name} Schedule";
-        LoadSessions();
     }
 
-    async void LoadSessions()
+    protected override async void OnAppearing()
     {
-        SessionsList.ItemsSource = await App.Service.GetSessions(_workout.ID);
+        base.OnAppearing();
+        await LoadSessions();
+    }
+
+    async Task LoadSessions()
+    {
+        if (_isGlobal)
+        {
+            // LOGICA PENTRU "SHOW ALL"
+            // Deoarece API-ul curent cere ID, vom face un truc:
+            // Luam toate tipurile de sport si extragem sesiunile pentru fiecare.
+            var allWorkouts = await App.Service.GetWorkoutTypes();
+            var allSessions = new List<SessionDto>();
+
+            foreach (var w in allWorkouts)
+            {
+                var s = await App.Service.GetSessions(w.ID);
+                allSessions.AddRange(s);
+            }
+
+            // Le sortam dupa data
+            SessionsList.ItemsSource = allSessions.OrderBy(x => x.Date).ThenBy(x => x.StartTime).ToList();
+        }
+        else
+        {
+            // LOGICA PENTRU "FILTRAT"
+            SessionsList.ItemsSource = await App.Service.GetSessions(_workout.ID);
+        }
     }
 
     private async void OnBookClicked(object sender, EventArgs e)
@@ -25,7 +61,7 @@ public partial class SessionsPage : ContentPage
         var button = sender as Button;
         var session = button.CommandParameter as SessionDto;
 
-        bool confirm = await DisplayAlert("Booking", $"Reserve spot for {session.StartTime}?", "Yes", "No");
+        bool confirm = await DisplayAlert("Booking", $"Reserve spot for {session.WorkoutName} at {session.StartTime}?", "Yes", "No");
         if (!confirm) return;
 
         var request = new BookingRequest { SessionID = session.ID, UserEmail = App.CurrentUserEmail };
@@ -35,36 +71,51 @@ public partial class SessionsPage : ContentPage
         if (success)
         {
             await DisplayAlert("Success", "Booking Confirmed!", "OK");
-            ScheduleNotification(session); // <--- PROGRAMEAZA NOTIFICAREA
-            LoadSessions(); // Refresh la lista (scade nr locuri)
+            ScheduleNotification(session);
+            await LoadSessions(); // Refresh
         }
         else
         {
-            await DisplayAlert("Error", "Class is full or you already booked it.", "OK");
+            await DisplayAlert("Error", "Class is full or already booked.", "OK");
         }
     }
 
-    private void ScheduleNotification(SessionDto session)
+    private async void ScheduleNotification(SessionDto session)
     {
-        // Data Sesiunii minus 2 ore
-        var notifyTime = session.Date.AddHours(-2);
+        if (await LocalNotificationCenter.Current.AreNotificationsEnabled() == false)
+        {
+            // Asta va deschide Pop-up-ul de sistem pe Android 13+
+            bool granted = await LocalNotificationCenter.Current.RequestNotificationPermission();
 
-        // Atentie: session.Date din API are ora 00:00. Trebuie combinata cu session.StartTime.
-        // Aici presupunem ca API-ul a trimis Data Corecta cu tot cu ora.
-        // Daca nu, logica e putin mai complexa de parsat stringul "18:00".
-        // Pentru simplificare, notificam acum peste 5 secunde demo:
+            if (!granted)
+            {
+                await DisplayAlert("Permisiune refuzata", "Nu iti putem trimite notificari.", "OK");
+                return;
+            }
+        }
+
+
+        //var notifyTime = session.Date.AddHours(-2);
+        var notifyTime = DateTime.Now.AddSeconds(10);
+
+        // Daca sesiunea e peste 2 luni, notificarea e utila. Daca e azi, notificam imediat demo.
+        //if (notifyTime < DateTime.Now) notifyTime = DateTime.Now.AddSeconds(5);
 
         var request = new NotificationRequest
         {
             NotificationId = session.ID,
             Title = "Reminder Fitness!",
-            Description = $"Ai clasa de {_workout.Name} cu {session.TrainerName}!",
+            Description = $"Ai clasa de {session.WorkoutName} la ora {session.StartTime}!",
             Schedule = new NotificationRequestSchedule
             {
-                NotifyTime = DateTime.Now.AddSeconds(10) // Demo: 10 secunde. Pt real: notifyTime
+                NotifyTime = notifyTime,
+                Android = new Plugin.LocalNotification.AndroidOption.AndroidScheduleOptions
+                {
+                    AlarmType = Plugin.LocalNotification.AndroidOption.AndroidAlarmType.Rtc
+                }
             }
         };
 
-        LocalNotificationCenter.Current.Show(request);
+        await LocalNotificationCenter.Current.Show(request);
     }
 }

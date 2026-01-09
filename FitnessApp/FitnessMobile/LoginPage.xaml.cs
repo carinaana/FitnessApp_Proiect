@@ -11,9 +11,9 @@ public partial class LoginPage : ContentPage
     private async void OnLoginClicked(object sender, EventArgs e)
     {
         var loginDto = new LoginDto { Email = EmailEntry.Text, Password = PasswordEntry.Text };
-        bool success = await App.Service.Login(loginDto);
+        string result = await App.Service.Login(loginDto);
 
-        if (success)
+        if (result == "OK")
         {
             App.CurrentUserEmail = EmailEntry.Text; // Tinem minte cine e
             // Schimbam pagina principala cu TabBar-ul aplicatiei

@@ -1,9 +1,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitnessMobile.WorkoutsPage"
-             Title="Workouts">
+             Title="Workouts"
+             BackgroundColor="#f8f9fa">
+
     <Grid RowDefinitions="Auto, *">
-        <Picker x:Name="DiffPicker" Title="Filter Difficulty" SelectedIndexChanged="OnFilterChanged">
+        <Picker x:Name="DiffPicker" 
+                Title="Filter Difficulty" 
+                SelectedIndexChanged="OnFilterChanged"
+                Margin="10" BackgroundColor="White">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>All</x:String>
@@ -14,14 +19,24 @@
             </Picker.ItemsSource>
         </Picker>
 
-        <CollectionView x:Name="WorkoutsList" Grid.Row="1" SelectionMode="Single" SelectionChanged="OnWorkoutSelected">
+        <CollectionView x:Name="WorkoutsList" 
+                        Grid.Row="1" 
+                        SelectionMode="None">
+            <!-- FARA SELECTIE -->
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Padding="15" Margin="10,5" BackgroundColor="#e3f2fd">
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="🏋️" FontSize="20"/>
-                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
-                            <Label Text="{Binding Difficulty}" TextColor="Red" VerticalOptions="Center"/>
+                    <Frame Style="{StaticResource BootstrapCard}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnWorkoutTapped" 
+                                                  CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
+
+                        <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
+                            <Label Text="🏋️" FontSize="24" VerticalOptions="Center"/>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="#212529"/>
+                                <Label Text="{Binding Difficulty}" TextColor="#dc3545" FontSize="14"/>
+                            </VerticalStackLayout>
                         </HorizontalStackLayout>
                     </Frame>
                 </DataTemplate>
