@@ -1,0 +1,62 @@
+﻿@page
+@model FitnessWeb.Pages.Sessions.EditModel
+@{
+    ViewData["Title"] = "Edit Session";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-bottom">
+                    <h4 class="mb-0 text-warning">Edit Session</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Session.ID" />
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Session.Date" class="control-label fw-bold">Date</label>
+                            <input asp-for="Session.Date" type="date" class="form-control" />
+                            <span asp-validation-for="Session.Date" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Session.StartTime" class="control-label fw-bold">Start Time</label>
+                            <input asp-for="Session.StartTime" type="time" class="form-control" />
+                            <span asp-validation-for="Session.StartTime" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Session.WorkoutTypeID" class="control-label fw-bold">Workout Type</label>
+                            <select asp-for="Session.WorkoutTypeID" class="form-select" asp-items="ViewBag.WorkoutTypeID"></select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Session.TrainerID" class="control-label fw-bold">Trainer</label>
+                            <select asp-for="Session.TrainerID" class="form-select" asp-items="ViewBag.TrainerID"></select>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="Session.MaxCapacity" class="control-label fw-bold">Max Capacity</label>
+                            <input asp-for="Session.MaxCapacity" class="form-control" />
+                            <span asp-validation-for="Session.MaxCapacity" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="./Index" class="btn btn-outline-secondary">Back</a>
+                            <input type="submit" value="Save Changes" class="btn btn-warning px-4 text-white" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

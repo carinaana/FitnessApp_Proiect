@@ -1,0 +1,90 @@
+﻿@page
+@model FitnessWeb.Pages.Sessions.IndexModel
+@{
+    ViewData["Title"] = "Sessions Schedule";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold">Class Schedule</h2>
+        <a asp-page="Create" class="btn btn-success shadow-sm">
+            <span class="fw-bold">+</span> Schedule New Class
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4 bg-light">
+        <div class="card-body py-3">
+            <form method="get" class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <label class="fw-bold text-secondary">Filter by Workout:</label>
+                </div>
+                <div class="col-auto">
+                    <select asp-for="SelectedWorkoutTypeID" asp-items="Model.WorkoutTypesList" class="form-select border-primary" onchange="this.form.submit()">
+                        <option value="">-- All Workouts --</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    @if (Model.SelectedWorkoutTypeID.HasValue)
+                    {
+                        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm">Reset Filter </a>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-secondary">
+                        <tr>
+                            <th class="py-3 ps-4">Date</th>
+                            <th class="py-3">Time</th>
+                            <th class="py-3">Workout</th>
+                            <th class="py-3">Trainer</th>
+                            <th class="py-3 text-center">Capacity</th>
+                            <th class="py-3 text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Session)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold">
+                                    @item.Date.ToShortDateString()
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">🕒 @item.StartTime</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary">@item.WorkoutType.Name</span>
+                                </td>
+                                <td>
+                                    @item.Trainer.FullName
+                                </td>
+                                <td class="text-center">
+                                    @item.MaxCapacity slots
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group" role="group">
+                                        <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-sm btn-outline-warning">Edit</a>
+                                        <a asp-page="./Details" asp-route-id="@item.ID" class="btn btn-sm btn-outline-primary">Details</a>
+                                        <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                @if (!Model.Session.Any())
+                {
+                    <div class="text-center py-5 text-muted">
+                        <p class="mb-0">No sessions found for this filter.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

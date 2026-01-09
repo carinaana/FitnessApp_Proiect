@@ -1,0 +1,50 @@
+﻿@page
+@model FitnessWeb.Pages.WorkoutTypes.EditModel
+@{
+    ViewData["Title"] = "Edit Workout Type";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-bottom">
+                    <h4 class="mb-0 text-warning">Edit Workout Type</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="WorkoutType.ID" />
+
+                        <div class="form-group mb-3">
+                            <label asp-for="WorkoutType.Name" class="control-label fw-bold">Name</label>
+                            <input asp-for="WorkoutType.Name" class="form-control" />
+                            <span asp-validation-for="WorkoutType.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="WorkoutType.Difficulty" class="control-label fw-bold">Difficulty Level</label>
+                            <select asp-for="WorkoutType.Difficulty" class="form-select">
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                            <span asp-validation-for="WorkoutType.Difficulty" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="./Index" class="btn btn-outline-secondary">Back to List</a>
+                            <input type="submit" value="Save Changes" class="btn btn-warning px-4 text-white" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FitnessWeb.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace FitnessWeb.Data
 {
-    public class FitnessContext : DbContext
+    public class FitnessContext : IdentityDbContext
     {
         public FitnessContext(DbContextOptions<FitnessContext> options)
             : base(options)
@@ -15,5 +16,7 @@ namespace FitnessWeb.Data
         public DbSet<WorkoutType> WorkoutType { get; set; }
         public DbSet<Session> Session { get; set; }
         public DbSet<Booking> Booking { get; set; }
+        public DbSet<TrainerSpecialization> TrainerSpecialization { get; set; }
+        public DbSet<Review> Reviews { get; set; }
     }
 }

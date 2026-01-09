@@ -1,0 +1,34 @@
+﻿@page
+@model FitnessWeb.Pages.Sessions.DeleteModel
+@{
+    ViewData["Title"] = "Cancel Class";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white text-center">
+                    <h4 class="mb-0">Cancel Class</h4>
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title text-danger mb-3">Are you sure you want to cancel this session?</h5>
+
+                    <div class="text-start bg-light p-3 rounded mb-4">
+                        <p class="mb-1"><strong>Workout:</strong> @Model.Session.WorkoutType.Name</p>
+                        <p class="mb-1"><strong>Trainer:</strong> @Model.Session.Trainer.FullName</p>
+                        <p class="mb-0"><strong>When:</strong> @Model.Session.Date.ToShortDateString() at @Model.Session.StartTime</p>
+                    </div>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="Session.ID" />
+                        <div class="d-flex justify-content-center gap-3">
+                            <a asp-page="./Index" class="btn btn-outline-secondary px-4">Keep Class</a>
+                            <input type="submit" value="Confirm Cancellation" class="btn btn-danger px-4" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

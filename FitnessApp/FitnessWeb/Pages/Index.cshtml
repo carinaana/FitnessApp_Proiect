@@ -1,10 +1,123 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<style>
+    .hero-section {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        height: 500px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .card {
+        transition: transform 0.3s;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+</style>
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="hero-section">
+        <div>
+            <h1 class="display-3 fw-bold">Fitness App Manager</h1>
+            <p class="lead fs-4">Manage trainers, schedules, and clients in one place.</p>
+            <hr class="my-4" style="background-color: white;">
+            <p>Access your account to get started.</p>
+            <a class="btn btn-primary btn-lg px-5 gap-3" asp-area="Identity" asp-page="/Account/Login" role="button">Log In</a>
+            <p>If you would like to be part of our team, contact us at admin@fitness.com for more details.</p>
+        </div>
+    </div>
+
+    <div class="row text-center mt-5">
+        <div class="col-md-4">
+            <div class="feature-icon">📅</div>
+            <h3>Flexible Schedule</h3>
+            <p>Organize training sessions quickly and efficiently.</p>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-icon">💪</div>
+            <h3>Top Trainers</h3>
+            <p>Manage the trainer team and their specializations.</p>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-icon">📱</div>
+            <h3>Mobile App</h3>
+            <p>Your clients can book directly from their phone.</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container mt-4">
+        <div class="p-5 mb-4 bg-light rounded-3 border">
+            <div class="container-fluid py-2">
+                <h1 class="display-5 fw-bold">Hello, @User.Identity.Name!</h1>
+                <p class="col-md-8 fs-4">Welcome to the admin panel. What would you like to do today?</p>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            <div class="col">
+                <div class="card h-100 border-primary border-2">
+                    <div class="card-body text-center">
+                        <h1 class="display-4">🏋️‍♂️</h1>
+                        <h5 class="card-title">Trainers</h5>
+                        <p class="card-text">Add or edit trainer profiles and their specializations.</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 text-center pb-3">
+                        <a asp-page="/Trainers/Index" class="btn btn-primary w-100">Manage Trainers</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 border-success border-2">
+                    <div class="card-body text-center">
+                        <h1 class="display-4">📆</h1>
+                        <h5 class="card-title">Session Schedule</h5>
+                        <p class="card-text">Plan classes, set the time and maximum capacity.</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 text-center pb-3">
+                        <a asp-page="/Sessions/Index" class="btn btn-success w-100">View Schedule</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 border-warning border-2">
+                    <div class="card-body text-center">
+                        <h1 class="display-4">🧘‍♀️</h1>
+                        <h5 class="card-title">Sport Types</h5>
+                        <p class="card-text">Define sport categories (Yoga, Pilates, Boxing, etc).</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 text-center pb-3">
+                        <a asp-page="/WorkoutTypes/Index" class="btn btn-warning w-100">Catalogs</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}

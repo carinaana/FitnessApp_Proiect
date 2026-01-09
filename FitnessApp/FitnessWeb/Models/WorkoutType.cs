@@ -6,5 +6,6 @@
         public string Name { get; set; } 
         public string Difficulty { get; set; } 
         public ICollection<Session>? Sessions { get; set; }
+        public ICollection<TrainerSpecialization>? TrainerSpecializations { get; set; }
     }
 }
