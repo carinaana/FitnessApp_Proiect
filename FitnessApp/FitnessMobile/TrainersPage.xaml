@@ -1,0 +1,34 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessMobile.TrainersPage"
+             Title="Our Trainers">
+    <Grid RowDefinitions="Auto, *">
+        <!-- ZONA FILTRARE -->
+        <Picker x:Name="SpecializationPicker" Title="Filter by Specialization" 
+                SelectedIndexChanged="OnFilterChanged" Margin="10">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>All</x:String>
+                    <x:String>Yoga</x:String>
+                    <x:String>Pilates</x:String>
+                    <x:String>Fitness</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+        <!-- LISTA ANTRENORI -->
+        <CollectionView x:Name="TrainersList" Grid.Row="1" SelectionMode="Single" SelectionChanged="OnTrainerSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" Margin="10,5">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding FullName}" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
+                            <Label Text="{Binding Specialization}" TextColor="Gray" />
+                            <Label Text="{Binding AverageRating, StringFormat='Rating: {0:F1} ★'}" TextColor="#ffc107" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

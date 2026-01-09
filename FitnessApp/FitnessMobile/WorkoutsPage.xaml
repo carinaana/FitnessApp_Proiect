@@ -1,0 +1,31 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessMobile.WorkoutsPage"
+             Title="Workouts">
+    <Grid RowDefinitions="Auto, *">
+        <Picker x:Name="DiffPicker" Title="Filter Difficulty" SelectedIndexChanged="OnFilterChanged">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>All</x:String>
+                    <x:String>Easy</x:String>
+                    <x:String>Medium</x:String>
+                    <x:String>Hard</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+        <CollectionView x:Name="WorkoutsList" Grid.Row="1" SelectionMode="Single" SelectionChanged="OnWorkoutSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="15" Margin="10,5" BackgroundColor="#e3f2fd">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="🏋️" FontSize="20"/>
+                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
+                            <Label Text="{Binding Difficulty}" TextColor="Red" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
