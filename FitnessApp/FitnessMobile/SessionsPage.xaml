@@ -3,6 +3,19 @@
              x:Class="FitnessMobile.SessionsPage"
              Title="Available Sessions">
     <CollectionView x:Name="SessionsList">
+        <CollectionView.EmptyView>
+            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Padding="30">
+                <Label Text="No session avalaible." 
+                 FontAttributes="Bold" 
+                 FontSize="18" 
+                 HorizontalOptions="Center"
+                TextColor="Gray"/>
+                <Label Text="There are currently no classes scheduled for this workout." 
+                HorizontalOptions="Center" 
+                TextColor="Silver"
+                 HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+        </CollectionView.EmptyView>
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Frame Padding="10" Margin="10">

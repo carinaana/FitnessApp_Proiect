@@ -15,6 +15,20 @@
         <CollectionView x:Name="TrainersList" 
                         Grid.Row="1" 
                         SelectionMode="None">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Padding="30">
+                    <Label Text="🔍" FontSize="50" HorizontalOptions="Center"/>
+                    <Label Text="Couldn't find any trainers." 
+                   FontAttributes="Bold" 
+                   FontSize="18" 
+                   HorizontalOptions="Center"
+                   TextColor="Gray"/>
+                    <Label Text="Try changing the filter or come back later." 
+                   HorizontalOptions="Center" 
+                   TextColor="Silver"
+                   HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Style="{StaticResource BootstrapCard}">

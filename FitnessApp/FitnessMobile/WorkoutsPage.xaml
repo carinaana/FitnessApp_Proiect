@@ -22,7 +22,19 @@
         <CollectionView x:Name="WorkoutsList" 
                         Grid.Row="1" 
                         SelectionMode="None">
-
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Padding="30">
+                    <Label Text="No workouts avalaible." 
+                   FontAttributes="Bold" 
+                   FontSize="18" 
+                   HorizontalOptions="Center"
+                   TextColor="Gray"/>
+                    <Label Text="There are currently no workouts that match the filter." 
+                   HorizontalOptions="Center" 
+                   TextColor="Silver"
+                   HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Style="{StaticResource BootstrapCard}">
